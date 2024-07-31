@@ -1,2 +1,2 @@
 # smartHive-vision
-Camera module for sHive bee monitoring system
+Camera module for sHive bee monitoring system.
