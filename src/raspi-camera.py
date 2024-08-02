@@ -27,6 +27,6 @@ if __name__ == "__main__":
 
             result.write(frame)
 
-            if time.time() - start_time >= 600: 
+            if time.time() - start_time >= 600:
                 result.release()
                 break
