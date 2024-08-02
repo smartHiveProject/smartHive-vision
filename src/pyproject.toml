@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "smarthive-vision"
+version = "0.1.0"
+description = ""
+authors = ["DeadHello <79786672+s1072489@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ultralytics = "^8.2.70"
+jupyter = "^1.0.0"
+opencv-python = "^4.10.0.84"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
