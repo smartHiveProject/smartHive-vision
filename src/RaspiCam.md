@@ -51,6 +51,6 @@ sudo crontab -e
 ```
 Add the following line to the file
 ```bash
-@reboot touch /tmp/raspi-cam.flag && sh /home/user/path-to-script/start-raspicam.sh
+@reboot sh /home/user/path-to-script/start-raspicam.sh
 ```
 All recordings and logs will be in the `src` directory
