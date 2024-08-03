@@ -27,7 +27,7 @@ if __name__ == "__main__":
                 ret, frame = capture.read()
 
                 if not ret:
-                    logger.log("Failed to capture frame")
+                    logger.warn("Failed to capture frame")
                     pass
 
                 if not cv.waitKey(1):
