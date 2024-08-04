@@ -9,7 +9,7 @@ import numpy as np
 from datetime import datetime
 
 
-def capture_frames(frame_queue_arg):
+def capture_frames():
     capture = cv.VideoCapture(0)
 
     capture.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
@@ -32,17 +32,19 @@ def capture_frames(frame_queue_arg):
         frame_queue.put(frame_bytes)
 
     capture.release()
+    logger.info("Recording completed")
 
 
-def write_frames(frame_queue_arg):
+def write_frames():
     fourcc = cv.VideoWriter_fourcc(*'XVID')
     out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 24, (1280, 720))
 
-    while not frame_queue.empty():
+    while not frame_queue.empty() or capturing_thread.is_alive:
         frame_bytes = frame_queue.get()
         out.write(np.frombuffer(frame_bytes, dtype=np.uint8).reshape(720, 1280, 3))
 
     out.release()
+    logger.info("Writing completed")
 
 
 if __name__ == "__main__":
@@ -55,18 +57,18 @@ if __name__ == "__main__":
 
     try:
         while True:
-            capturing_thread = threading.Thread(target=capture_frames, args=(frame_queue,))
+            capturing_thread = threading.Thread(target=capture_frames)
             capturing_thread.start()
 
-            writing_thread = threading.Thread(target=write_frames, args=(frame_queue,))
+            writing_thread = threading.Thread(target=write_frames)
             writing_thread.start()
 
             logger.info("Recording started")
 
             capturing_thread.join()
-            logger.info("Recording completed")
             writing_thread.join()
-            logger.info("Writing completed")
+
+            frame_queue.queue.clear()
 
             time.sleep(1)
 
