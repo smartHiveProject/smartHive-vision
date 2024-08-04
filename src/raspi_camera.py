@@ -18,18 +18,22 @@ def capture_frames():
 
     time_end = time.time() + 600
 
-    while time.time() <= time_end:
-        ret, frame = capture.read()
+    try:
+        while time.time() <= time_end:
+            ret, frame = capture.read()
 
-        if not ret:
-            logger.warn("Failed to capture frame")
-            pass
+            if not ret:
+                logger.warning("Failed to capture frame")
+                pass
 
-        if not cv.waitKey(1):
-            pass
+            if not cv.waitKey(1):
+                pass
 
-        frame_bytes = frame.tobytes()
-        frame_queue.put(frame_bytes)
+            frame_bytes = frame.tobytes()
+            frame_queue.put(frame_bytes)
+
+    except Exception as e:
+        logger.error(e, exc_info=True)
 
     capture.release()
     logger.info("Recording completed")
@@ -39,9 +43,13 @@ def write_frames():
     fourcc = cv.VideoWriter_fourcc(*'XVID')
     out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 24, (1280, 720))
 
-    while not frame_queue.empty() or capturing_thread.is_alive:
-        frame_bytes = frame_queue.get()
-        out.write(np.frombuffer(frame_bytes, dtype=np.uint8).reshape(720, 1280, 3))
+    try:
+        while not frame_queue.empty() or capturing_thread.is_alive:
+            frame_bytes = frame_queue.get()
+            out.write(np.frombuffer(frame_bytes, dtype=np.uint8).reshape(720, 1280, 3))
+
+    except Exception as e:
+        logger.error(e, exc_info=True)
 
     out.release()
     logger.info("Writing completed")
