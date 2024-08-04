@@ -167,3 +167,4 @@ cython_debug/
 
 # Don't accidently upload video of yourself
 *.mp4
+*.avi
