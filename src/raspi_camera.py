@@ -14,7 +14,7 @@ def capture_frames():
 
     capture.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
     capture.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
-    capture.set(cv.CAP_PROP_FPS, 24)
+    capture.set(cv.CAP_PROP_FPS, 15)
 
     time_end = time.time() + 600
 
@@ -41,7 +41,7 @@ def capture_frames():
 
 def write_frames():
     fourcc = cv.VideoWriter_fourcc(*'XVID')
-    out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 24, (1280, 720))
+    out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 15, (1280, 720))
 
     try:
         while not frame_queue.empty() or capturing_thread.is_alive:
