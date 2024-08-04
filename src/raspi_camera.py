@@ -1,12 +1,12 @@
 # Script to record 10min long videos from a Raspberry Pi
 
 import time
-import queue
 import logging
 import threading
 import cv2 as cv
 import numpy as np
 from datetime import datetime
+from multiprocessing import Queue
 
 
 def capture_frames():
@@ -14,7 +14,7 @@ def capture_frames():
 
     capture.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
     capture.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
-    capture.set(cv.CAP_PROP_FPS, 15)
+    capture.set(cv.CAP_PROP_FPS, 24)
 
     time_end = time.time() + 600
 
@@ -41,7 +41,7 @@ def capture_frames():
 
 def write_frames():
     fourcc = cv.VideoWriter_fourcc(*'XVID')
-    out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 15, (1280, 720))
+    out = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.avi", fourcc, 24, (1280, 720))
 
     try:
         while not frame_queue.empty() or capturing_thread.is_alive:
@@ -56,7 +56,7 @@ def write_frames():
 
 
 if __name__ == "__main__":
-    frame_queue = queue.Queue()
+    frame_queue = Queue()
 
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO, filename="raspi-camera.log", format="%(asctime)s - %(levelname)s - %(message)s")
@@ -76,9 +76,9 @@ if __name__ == "__main__":
             capturing_thread.join()
             writing_thread.join()
 
-            frame_queue.queue.clear()
+            frame_queue.close()
 
-            time.sleep(1)
+            time.sleep(10)
 
     except Exception as e:
         logger.error(e, exc_info=True)
