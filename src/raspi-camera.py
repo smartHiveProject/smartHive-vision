@@ -9,6 +9,8 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO, filename="raspi-camera.log", format="%(asctime)s - %(levelname)s - %(message)s")
 
+    logger.info("Initial startup")
+
     try:
         while True:
             capture = cv.VideoCapture(0)
@@ -17,11 +19,10 @@ if __name__ == "__main__":
             capture.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
             capture.set(cv.CAP_PROP_FPS, 30)
 
-            logger.info("Camera initialized")
-
-            start_time = time.time()
             result = cv.VideoWriter(f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.mp4", cv.VideoWriter_fourcc(*'avc1'), 30, (1280, 720))
             logger.info("Recording started")
+
+            start_time = time.time()
 
             while True:
                 ret, frame = capture.read()
@@ -31,7 +32,7 @@ if __name__ == "__main__":
                     pass
 
                 if not cv.waitKey(1):
-                    break
+                    pass
 
                 result.write(frame)
 
