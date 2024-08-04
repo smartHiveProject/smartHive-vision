@@ -24,7 +24,7 @@ def capture_frames():
 
             if not ret:
                 logger.warning("Failed to capture frame")
-                pass
+                continue
 
             if not cv.waitKey(1):
                 pass
