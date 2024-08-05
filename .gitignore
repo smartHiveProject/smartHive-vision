@@ -162,9 +162,9 @@ cython_debug/
 .idea/
 .idea_modules/
 
-# Driver for windows systems but not used for raspberry pi (openh264-1.8.0-win64.dll)
-*.dll
-
 # Don't accidently upload video of yourself
 *.mp4
 *.avi
+
+# Training data
+data/
