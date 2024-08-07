@@ -6,9 +6,9 @@ import cv2 as cv
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process video to extract frames", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-f", "--file", help="Source file", type=str, required=True)
+    parser.add_argument("-f", "--file", help="Video source file", type=str, required=True)
     parser.add_argument("-i", "--frame_interval", help="Interval at which to extract frames", type=int, default=6)
-    parser.add_argument("-c", "--count", help="Filename start", type=int, default=0)
+    parser.add_argument("-c", "--count", help="Filename to start counting on", type=int, default=0)
 
     args = parser.parse_args()
     capture = cv.VideoCapture(args.file)
@@ -35,4 +35,4 @@ if __name__ == "__main__":
         frame_number += 1
 
     capture.release()
-    print(f"Saved {frame_count} frames")
+    print(f"Saved {int(frame_count/args.frame_interval)} frames")
