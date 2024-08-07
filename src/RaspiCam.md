@@ -33,7 +33,7 @@ pip install -r requirements.txt
 Whenever you want to run the scripts, you need to activate the virtual environment
 
 ## Setting up auto start on boot
-Create a bash script to run the python script
+Create a bash script to run the python script (Note: using the old script is recommended and the new one offers no benefit and only seems to crash once in a while)
 ```bash
 touch start-raspi-cam.sh
 nano start-raspi-cam.sh
@@ -43,7 +43,7 @@ nano start-raspi-cam.sh
 
 cd /home/user/path-to-repo/src
 . smartenv/bin/activate
-python raspi-camera.py
+python raspi_cam_old.py
 ```
 Set up a cron job to start this script each time the Raspberry Pi boots
 ```bash
