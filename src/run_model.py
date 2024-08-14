@@ -48,10 +48,12 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    model = YOLO(args.model)
+
     if args.type == "video":
-        process_video(args.file, args.export, args.model)
+        process_video(args.file, args.export, model)
     elif args.type == "image":
-        process_image(args.file, args.export, args.model)
+        process_image(args.file, args.export, model)
     else:
         print("Invalid type. Please choose either video or image")
         sys.exit(-1)
