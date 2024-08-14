@@ -19,7 +19,7 @@ def process_image(image_name, export_name, model):
 
 def process_video(video_name, export_name, model):
     capture = cv.VideoCapture(video_name)
-    output = cv.VideoWriter(export_name, cv.VideoWriter_fourcc(*"mp4v"), 30, (640, 640))
+    output = cv.VideoWriter(export_name, cv.VideoWriter_fourcc(*"mp4v"), capture.get(cv.CAP_PROP_FPS), (640, 640))
 
     if not capture.isOpened():
         print("Could not open video file")
@@ -48,12 +48,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    model = YOLO(args.model)
-
     if args.type == "video":
-        process_video(args.file, args.export, model)
+        process_video(args.file, args.export, YOLO(args.model))
     elif args.type == "image":
-        process_image(args.file, args.export, model)
+        process_image(args.file, args.export, YOLO(args.model))
     else:
         print("Invalid type. Please choose either video or image")
         sys.exit(-1)
