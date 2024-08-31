@@ -16,7 +16,7 @@ sudo apt install git
 
 Clone the repository and create virtual environment
 ```bash
-git clone https://github.com/s1072489/smartHive-vision.git
+git clone https://github.com/smartHiveProject/smartHive-vision.git
 cd smartHive-vision/src
 python -m venv env
 ```
