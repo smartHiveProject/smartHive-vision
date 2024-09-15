@@ -49,7 +49,7 @@ nano start-raspi-cam.sh
 !#/bin/bash
 
 cd /home/user/path-to-repo/src
-. smartenv/bin/activate
+. venv/bin/activate
 python raspi_cam.py
 ```
 To start this bash file on startup, create a cron job to start this script each time the Raspberry Pi boots
