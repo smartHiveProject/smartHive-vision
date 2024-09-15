@@ -1,4 +1,4 @@
-# smartHive-vision (WIP)
+# smartHive-vision
 Data collection and YOLOv10 model training scripts used for the smartHive bee monitoring system.  
 
 ## Contributing
